@@ -1,7 +1,7 @@
 # torre-test
 
 # Plan
-1. Investigation: Figure out how the endopoints work and other general information
+1. Investigation: Figure out how the endopoints work and other general information about torre roadmap ...
 2. Ideation, and estimation
 3. Implementation
 
