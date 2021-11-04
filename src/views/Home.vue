@@ -51,7 +51,7 @@ export default {
 
       this.loading = true
 
-      let result = await fetch(`http://localhost:3001/api/searchJob`, {
+      let result = await fetch(`https://connect.juandavidgf.com/api/searchJob`, {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
