@@ -7,7 +7,7 @@
           placeholder="name"
           v-model="search" type="text" id="search"
           >
-          <button class="button-search mt-14 -ml-16 px-1 text-yellow-400" @click="searchFun">search</button>
+          <button class="button-search mt-14 -ml-16 px-1 text-yellow-400"  @click="searchFun" v-on:keyup.enter="searchFun">search</button>
         </div>
         <div v-for="user in result.data" :key="user.subjectId"
         class="cardUser my-2 py-3 text-left flex flex row">
@@ -15,6 +15,8 @@
           <div class="hex w-16 ml-2 flex object-center sm:ml-3">
             <img  class="object-contain" :src="user.picture">
           </div>
+
+          <div v-if="loading" class=" text-4xl text-yellow-400 ml-3 sm:ml-6">Loading...</div>
           
           <div class="ml-3 sm:ml-6">
             <div class="text-yellow-400 cursor-pointer text-sm" @click="goToUser(user.username)">{{ user.name }}</div>
@@ -39,14 +41,17 @@ export default {
   data() {
     return {
       search: '',
-      result: ''
+      result: '',
+      loading: false
     }
   },
   methods: {
     async searchFun(index) {
       let data = {search: this.search}
 
-      let result = await fetch(`http://localhost:3000/api/searchJob`, {
+      this.loading = true
+
+      let result = await fetch(`http://localhost:3001/api/searchJob`, {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
@@ -60,7 +65,10 @@ export default {
 
       this.$store.commit('setUsers', result.data)
 
-      console.log(result);
+      this.loading= false
+
+
+      //console.log(result);
     },
     other() {
       console.log('this.$store.state.users', this.$store.state.users);

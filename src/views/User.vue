@@ -1,7 +1,13 @@
 <template>
 <div id="user">
-  <div class="grid grid-cols-3 max-w-6xl mx-auto py-16">
-    <div class="card-user mx-auto max-w-xs w-72 w-80 py-10">
+  <div class="max-w-6xl mx-auto visible sm:invisible flex flex-row pt-16">
+    <div :class="{underline: personTab}" class="w-1/3" @click="activeTab('personTab')">Person</div>
+    <div :class="{underline: skillTab}" class="w-1/3" @click="activeTab('skillTab')">People Skills</div>
+    <div :class="{underline: degreeTab}" class="w-1/3" @click="activeTab('degreeTab')">Degrees</div>
+  </div>
+  <div class="grid md:grid-cols-3 max-w-6xl mx-auto pb-16">
+    <div :class="{hidden: !personTab}" class=" md:block card-user mx-auto max-w-xs w-72 w-80 py-10">
+      <div v-if="loading" class=" text-4xl text-yellow-400 ml-3 sm:ml-6">Loading...</div>
       <img class="mx-auto w-56" :src="user.person.picture" alt="">
       <div class="mx-auto text-xl my-2">{{user.person.name}}</div>
       <hr class="border mt-10">
@@ -39,7 +45,7 @@
 
     </div>
     <!-- list of peolpe with some skill -->
-    <div class="card-user mx-auto max-w-xs w-80 py-10">
+    <div :class="{hidden: !skillTab}" class="md:block card-user mx-auto max-w-xs w-80 py-10">
       <div v-if="!skillSelected">Click in some skill to show a list of people with it</div>
       <div v-if="skillSelected">{{skillSelected}}</div>
       <div v-for="user in skillMatch" :key="user.subjectId"
@@ -55,7 +61,7 @@
       </div>
     </div>
     <!-- grade of conection -->
-    <div class="card-user mx-auto max-w-xs w-80 py-10">
+    <div :class="{hide: !degreeTab}" class="md:block card-user mx-auto max-w-xs w-80 py-10">
       <div>By Grades of connection</div>
       <div v-for="user in connections" :key="user.person.subjectId"
       class="cardUser my-2 py-3 text-left flex flex row">
@@ -63,9 +69,9 @@
           <img  class="object-contain" :src="user.person.picture">
         </div>
         <div class="ml-3 sm:ml-6 w-5/6">
-          <div class="text-yellow-400 cursor-pointer text-sm" @click="goToUser(user.username)">{{ user.person.name }}</div>
+          <div class="text-yellow-400 cursor-pointer text-sm" @click="goToUser(user.person.publicId)">{{ user.person.name }}</div>
           <div class="text-xs sm:text-sm">{{user.person.professionalHeadline}}</div>
-          <div class="text-xs sm:text-xs mt-1">{{user.person.locationName}}</div>
+          <div class="text-xs sm:text-xs mt-1">{{user.person.locationName}} </div>
         </div>
       </div>
     </div>
@@ -82,7 +88,11 @@ export default {
       skills: {},
       skillMatch: {},
       skillSelected: '',
-      connections: {}
+      connections: {},
+      loading: false,
+      personTab: true,
+      skillTab: false,
+      degreeTab: false
     }
   },
   async mounted() {
@@ -95,7 +105,7 @@ export default {
       if(this.userIndex === '') {
         alert("haven't found any user")
       } else {
-        let user = await fetch(`http://localhost:3000/api/username?username=${this.username}`, {
+        let user = await fetch(`http://localhost:3001/api/username?username=${this.username}`, {
             method: "GET",
           }).then(res => res.json())
           .catch(error => {console.error('Error:', error)})
@@ -147,7 +157,7 @@ export default {
       
       this.skillSelected = skill.name
 
-      let result = await fetch(`http://localhost:3000/api/searchForSkill`, {
+      let result = await fetch(`http://localhost:3001/api/searchForSkill`, {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
@@ -159,7 +169,7 @@ export default {
 
       this.skillMatch = result.data
 
-      let connections = await fetch(`http://localhost:3000/api/connections?username=${this.username}`, {
+      let connections = await fetch(`http://localhost:3001/api/connections?username=${this.username}`, {
         method: "GET",
         headers: {
           'Content-Type': 'application/json'
@@ -177,9 +187,25 @@ export default {
       this.$store.commit('setUsername', username)
       this.skillSelected = ''
       this.skillMatch = {}
+      this.connections = {}
       
       this.init()
-      
+    },
+    activeTab(activeTab) {
+      if(activeTab ==='personTab') {
+        this.personTab = true
+        this.skillTab = false
+        this.degreeTab = false
+      } else if(activeTab ==='skillTab') {
+        this.personTab = false
+        this.skillTab = true
+        this.degreeTab = false
+      } else if(activeTab === 'degreeTab') {
+        this.personTab = false
+        this.skillTab = false
+        this.degreeTab = true
+      } 
+
     },
   }
 }

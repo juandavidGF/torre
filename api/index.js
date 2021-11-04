@@ -23,7 +23,6 @@ app.get('/api/username', async (req, res) => {
     data: dat
   })
 })
-
 app.get('/api/connections', async (req, res) => {
   const { username } = req.query
 
