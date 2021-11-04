@@ -51,12 +51,10 @@ export default {
 
       this.loading = true
 
-      // let result = await fetch(`https://connect.juandavidgf.com/api/searchJob`, {
-
-      let result = await fetch(`https://juandavidgf.com/api/searchPerson`, {
+      let result = await fetch(`https://connect.juandavidgf.com/api/searchPerson`, {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json'          
         },
         body: JSON.stringify(data)
       }).then(res => res.json())

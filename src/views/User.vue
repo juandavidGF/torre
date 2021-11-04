@@ -106,7 +106,7 @@ export default {
         alert("haven't found any user")
       } else {
         this.loading = true
-        let user = await fetch(`https://juandavidgf.com/api/username?username=${this.username}`, {
+        let user = await fetch(`https://connect.juandavidgf.com/api/username?username=${this.username}`, {
             method: "GET",
           }).then(res => res.json())
           .catch(error => {console.error('Error:', error)})
@@ -168,7 +168,7 @@ export default {
 
       this.loading = true
 
-      let result = await fetch(`https://juandavidgf.com/api/searchForSkill`, {
+      let result = await fetch(`https://connect.juandavidgf.com/api/searchForSkill`, {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
@@ -181,7 +181,7 @@ export default {
 
       this.skillMatch = result.data
 
-      let connections = await fetch(`https://juandavidgf.com/api/connections?username=${this.username}`, {
+      let connections = await fetch(`https://connect.juandavidgf.com/api/connections?username=${this.username}`, {
         method: "GET",
         headers: {
           'Content-Type': 'application/json'
