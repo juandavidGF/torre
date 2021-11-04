@@ -2,17 +2,14 @@
   <div class="home">
     <label for="search">Search </label>
     <input v-model="search" type="text" id="search">
-    <button class=" bg-blue-400 " @click="searchFun">search</button>
+    <button class="bg-blue-400 mx-3 " @click="searchFun">search</button>
     <button @click="other()">other</button>
 
-    <div class="bg-green-100 text-6xl w-16">hola</div>
-
     <div v-for="user in result.data" :key="user.subjectId">
-      <h1>{{ user.name }}</h1>
+      <h1 @click="goToUser(user.username)">{{ user.name }}</h1>      
       <p class="bg-red-500">{{user.professionalHeadline}}</p>
       <p>{{user.locationName}}</p>
     </div>
-
   </div>
 </template>
 
@@ -32,7 +29,7 @@ export default {
     }
   },
   methods: {
-    async searchFun() {
+    async searchFun(index) {
       let data = {search: this.search}
 
       let result = await fetch(`http://localhost:3000/api/searchJob`, {
@@ -47,12 +44,18 @@ export default {
 
       this.result = result
 
+      this.$store.commit('setUsers', result.data)
+
       console.log(result);
     },
     other() {
-      console.log(this.result != '')
-      
-    },  
+      console.log('this.$store.state.users', this.$store.state.users);
+    },
+    goToUser(username) {
+      // console.log('setUserIndex',index);
+      this.$store.commit('setUsername', username)
+      this.$router.push('/user')
+    }
   }
 }
 </script>

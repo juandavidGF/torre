@@ -10,6 +10,21 @@ app.get('/api', (req, res) => {
   res.end(`Hello ${name}!`);
 })
 
+app.get('/api/username', async (req, res) => {
+  const { username } = req.query
+
+  let dat = await fetch(`https://torre.bio/api/bios/${username}`, {
+    method: "GET"
+  }).then(res => res.json())
+  .catch(error => {console.error('Error:', error)})
+  .then(response => response);
+
+  res.status(200).send({
+    data: dat
+  })
+
+})
+
 app.post('/api/searchJob', async (req, res) => {
   const { search } = req.body;
 
