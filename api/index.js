@@ -1,25 +1,39 @@
 const express = require("express")
 const app = express()
-const { v4 } = require('uuid')
+const fetch = require("node-fetch")
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.get('/api', (req, res) => {
-  const path = `/api/item/${v4()}`
-  res.setHeader('Content-Type', 'text/html')
-  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate')
-  res.end(`Hello! Go to item: <a href="${path}">${path}</a>`)
+  const { name } = req.query;
+  res.end(`Hello ${name}!`);
 })
 
-app.get('/api/item/:slug', (req, res) => {
-  const { slug } = req.params
-  res.end(`Item: ${slug}`)
+app.post('/api/searchJob', async (req, res) => {
+  const { search } = req.body;
+
+  let data = {
+    name: {
+      term: search
+    }
+  }
+
+  let dat = await fetch("https://search.torre.co/people/_search?lang=es&size=10&aggregate=false", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)    
+  }).then(res => res.json())
+  .catch(error => {console.error('Error:', error)})
+  .then(response => response);
+
+  res.status(200).send({
+    data: dat.results,
+    total: dat.total
+  })
 })
 
-app.get('/api//:slug', (req, res) => {
-  const { slug } = req.params
-  res.end(`Item: ${slug}`)
-})
 
 module.exports = app
