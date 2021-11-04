@@ -1,11 +1,44 @@
 <template>
 <div id="user">
-  <div>{{user.person.name}}</div>
-  <img :src="user.person.picture" alt="">
-  <div v-for="skill in user.strengths" :key="skill.code">
-    <div>{{ skill.name }}</div>
-  </div>
+  <div class="max-w-3xl mx-auto py-16">
+    <div class="card-user mx-auto max-w-xs py-10">
+      <img class="mx-auto w-56" :src="user.person.picture" alt="">
+      <div class="mx-auto text-xl my-2">{{user.person.name}}</div>
+      <hr class="border mt-10">
+      <div class="my-3 text-xl text-left ml-5 mt-6 mb-5">Skills:</div>
+      <div v-if="skills.master.length > 0 ">
+        <div class="my-3 text-xl text-left ml-5 mt-4">master</div>
+        <div class="cursor-pointer flex flex-shrink my-2 ml-4" v-for="skill in skills.master" :key="skill.code">
+          <div class="skill rounded-3xl px-2" >{{ skill.name }}</div>
+        </div>
+      </div>
+       <div v-if="skills.expert.length > 0 "> 
+        <div class="my-3 text-xl text-left ml-5 mt-4">expert</div>
+        <div class="cursor-pointer flex flex-shrink my-2 ml-4" v-for="skill in skills.expert" :key="skill.code">
+          <div class="skill rounded-3xl px-2" >{{ skill.name }}</div>
+        </div>
+      </div>
+      <div v-if="skills.proeficient.length > 0 "> 
+        <div class="my-3 text-xl text-left ml-5 mt-4">proeficient</div>
+        <div class="cursor-pointer flex flex-shrink my-2 ml-4" v-for="skill in skills.proeficient" :key="skill.code">
+          <div class="skill rounded-3xl px-2" >{{ skill.name }}</div>
+        </div>
+      </div>
+      <div v-if="skills.novice.length > 0"> 
+        <div class="my-3 text-xl text-left ml-5 mt-4">novice</div>
+        <div class="cursor-pointer flex flex-shrink my-2 ml-4" v-for="skill in skills.novice" :key="skill.code">
+          <div class="skill rounded-3xl px-2" >{{ skill.name }}</div>
+        </div>
+      </div>
+      <div v-if="skills.noExperience.length > 0"> 
+        <div class="my-3 text-xl text-left ml-5 mt-4">No experienced, but interested</div>
+        <div class="cursor-pointer flex flex-shrink my-2 ml-4" v-for="skill in skills.noExperience" :key="skill.code">
+          <div class="skill rounded-3xl px-2" >{{ skill.name }}</div>
+        </div>
+      </div>
 
+    </div>
+  </div>
 </div>
 </template>
 
@@ -14,7 +47,8 @@ export default {
   data() {
     return {
       user: '',
-      username: ''
+      username: '',
+      skills: {}
     }
   },
   async mounted() {
@@ -30,8 +64,44 @@ export default {
         .then(response => response);
 
       console.log('user', user.data);
-
       this.user = user.data
+
+      this.organazeSkills()
+    }
+  },
+  methods: {
+    organazeSkills() {      
+      this.user.strengths.filter
+
+      let noExperience = this.user.strengths.filter(function(element){
+        return element.proficiency === "no-experience-interested";
+      });
+
+      const novice = this.user.strengths.filter(function(element){
+        return element.proficiency === "novice";
+      });
+
+      const proficient = this.user.strengths.filter(function(element){
+        return element.proficiency === "proficient";
+      });
+
+      const master = this.user.strengths.filter(function(element){
+        return element.proficiency === "master";
+      });
+
+      const expert = this.user.strengths.filter(function(element){
+        return element.proficiency === "master";
+      });
+
+      this.skills = {
+        noExperience: noExperience, 
+        novice: novice,
+        proeficient: proficient, 
+        expert: expert,
+        master: master
+      }
+
+      // console.log('length novice', this.strengths.novice.length);
     }
   },
 
@@ -39,5 +109,10 @@ export default {
 </script>
 
 <style>
-
+.card-user {
+  box-shadow: 0  5px 7px 2px rgb(255 255 255 / 0.2);
+}
+.skill {
+  background-color: #383b40;
+}
 </style>

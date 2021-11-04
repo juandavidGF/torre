@@ -22,7 +22,6 @@ app.get('/api/username', async (req, res) => {
   res.status(200).send({
     data: dat
   })
-
 })
 
 app.post('/api/searchJob', async (req, res) => {
