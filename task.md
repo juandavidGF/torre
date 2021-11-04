@@ -5,13 +5,14 @@
 * Add extra 'secret functionality' ...
 
 # DOING
-* Update to NuxtJs and tailwindCSS
+* Create a route to skill list of especific user
 
 # DONE
 * search a specific people for name search (curl)
 * understand how to work other endpoints
 * consume basic data since frontend via serverless function
 * Search for a user name and show a list of results
+* Configurate tailwindcss
 
 
 # Interesting topics to develop

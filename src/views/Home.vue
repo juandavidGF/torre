@@ -2,12 +2,14 @@
   <div class="home">
     <label for="search">Search </label>
     <input v-model="search" type="text" id="search">
-    <button @click="searchFun">search</button>
+    <button class=" bg-blue-400 " @click="searchFun">search</button>
     <button @click="other()">other</button>
+
+    <div class="bg-green-100 text-6xl w-16">hola</div>
 
     <div v-for="user in result.data" :key="user.subjectId">
       <h1>{{ user.name }}</h1>
-      <p>{{user.professionalHeadline}}</p>
+      <p class="bg-red-500">{{user.professionalHeadline}}</p>
       <p>{{user.locationName}}</p>
     </div>
 
