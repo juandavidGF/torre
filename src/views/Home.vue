@@ -53,7 +53,7 @@ export default {
 
       // let result = await fetch(`https://connect.juandavidgf.com/api/searchJob`, {
 
-      let result = await fetch(`http://localhost:3001/api/searchJob`, {
+      let result = await fetch(`https://juandavidgf.com/api/searchPerson`, {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'

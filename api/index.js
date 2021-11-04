@@ -14,91 +14,66 @@ app.get('/api', (req, res) => {
 app.get('/api/username', async (req, res) => {
   const { username } = req.query
 
-  let respuesta = await axios.get(`https://torre.bio/api/bios/${username}`)
-  let dat = respuesta.data;
+  let response = await axios.get(`https://torre.bio/api/bios/${username}`,
+    {headers: {'Content-Type': 'application/json'}
+  });
 
-  // let dat = await fetch(`https://torre.bio/api/bios/${username}`, {
-  //   method: "GET"
-  // }).then(res => res.json())
-  // .catch(error => {console.error('Error:', error)})
-  // .then(response => response);
+  response = response.data
 
   res.status(200).send({
-    data: dat
+    data: response
   })
 })
-// app.get('/api/connections', async (req, res) => {
-//   const { username } = req.query
 
-//   let dat = await axios({
-//     method: 'get',
-//     url: `https://torre.bio/api/people/${username}/connections`,
-//   }).then((response) => {
-//     return response.json();
-//   }).catch((err) => console.log(err))
+app.get('/api/connections', async (req, res) => {
+  const { username } = req.query
 
-//   let dat = await fetch(`https://torre.bio/api/people/${username}/connections`, {
-//     method: "GET"
-//   }).then(res => res.json())
-//   .catch(error => {console.error('Error:', error)})
-//   .then(response => response);
+  let response = await axios.get(`https://torre.bio/api/people/${username}/connections`,
+    {headers: {'Content-Type': 'application/json'}
+  });
 
-//   res.status(200).send({
-//     data: dat
-//   })
-// })
+  response = response.data
 
+  res.status(200).send({
+    data: response
+  })
+})
 
-// app.post('/api/searchForSkill', async (req, res) => {
-//   const { skill } = req.body;
+app.post('/api/searchForSkill', async (req, res) => {
+  const { skill } = req.body;
 
-//   let dat = await fetch("https://search.torre.co/people/_search?currency=USD%24&periodicity=hourly&lang=es&size=20&aggregate=false", {
-//     method: "POST",
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: `{\"skill/role\":{\"text\":\"${skill}\",\"proficiency\":\"proficient\"}}`,
-//   }).then(res => res.json())
-//   .catch(error => {console.error('Error:', error)})
-//   .then(response => response);
+  body = `{\"skill/role\":{\"text\":\"${skill}\",\"proficiency\":\"proficient\"}}`
 
-//   res.status(200).send({
-//     data: dat.results
-//   })
-// })
+  let dat = await axios.post("https://search.torre.co/people/_search?currency=USD%24&periodicity=hourly&lang=es&size=20&aggregate=false", body,
+    {headers: {'Content-Type': 'application/json'}
+  })
 
-app.post('/api/searchJob', async (req, res) => {
+  let data = dat.data
+
+  res.status(200).send({
+    data: data.results
+  })
+})
+
+app.post('/api/searchPerson', async (req, res) => {
   const { search } = req.body;
 
   let data = {
     name: {
-      term: 'juan david granados'
+      term: search
     }
   }
 
-  let dat = await axios.post("https://search.torre.co/people/_search?lang=es&size=10&aggregate=false", data,
+  let response = await axios.post("https://search.torre.co/people/_search?lang=es&size=10&aggregate=false", data,
     {headers: {'Content-Type': 'application/json'}
   })
 
-  let da = dat.data
-
-
-
-  // let dat = await fetch("https://search.torre.co/people/_search?lang=es&size=10&aggregate=false", {
-  //   method: "POST",
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   },
-  //   body: JSON.stringify(data)    
-  // }).then(res => res.json())
-  // .catch(error => {console.error('Error:', error)})
-  // .then(response => response);
+  response = response.data
 
   res.status(200).send({
-    data: da.results,
-    total: da.total
+    data: response.results,
+    total: response.total
   })
 })
-
 
 module.exports = app
