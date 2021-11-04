@@ -7,8 +7,9 @@
 
     <div v-for="user in result.data" :key="user.subjectId">
       <h1>{{ user.name }}</h1>
+      <p>{{user.professionalHeadline}}</p>
+      <p>{{user.locationName}}</p>
     </div>
-
 
   </div>
 </template>

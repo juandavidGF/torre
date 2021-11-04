@@ -1,18 +1,17 @@
 # TODO
-* Search for a user name and show a list of results
 * next of pick someoune, list the skills of the user
 * Impove the UI 
 * show basic important information related with it section
 * Add extra 'secret functionality' ...
 
 # DOING
-* consume basic data since frontend via serverless function
-
+* Update to NuxtJs and tailwindCSS
 
 # DONE
-* Retrive a person skills given for user name (https://torre.bio/api/bios/juandavidgf)
-* search a specific people for name search
+* search a specific people for name search (curl)
 * understand how to work other endpoints
+* consume basic data since frontend via serverless function
+* Search for a user name and show a list of results
 
 
 # Interesting topics to develop
