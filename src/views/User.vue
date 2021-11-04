@@ -5,9 +5,9 @@
     <div :class="{underline: skillTab}" class="w-1/3" @click="activeTab('skillTab')">People Skills</div>
     <div :class="{underline: degreeTab}" class="w-1/3" @click="activeTab('degreeTab')">Degrees</div>
   </div>
+  <div v-if="loading" class="text-4xl text-yellow-400 ml-3 sm:ml-6 sm:mt-15">Loading...</div>
   <div class="grid md:grid-cols-3 max-w-6xl mx-auto pb-16">
     <div :class="{hidden: !personTab}" class=" md:block card-user mx-auto max-w-xs w-72 w-80 py-10">
-      <div v-if="loading" class=" text-4xl text-yellow-400 ml-3 sm:ml-6">Loading...</div>
       <img class="mx-auto w-56" :src="user.person.picture" alt="">
       <div class="mx-auto text-xl my-2">{{user.person.name}}</div>
       <hr class="border mt-10">
@@ -89,7 +89,7 @@ export default {
       skillMatch: {},
       skillSelected: '',
       connections: {},
-      loading: false,
+      loading: true,
       personTab: true,
       skillTab: false,
       degreeTab: false
@@ -105,13 +105,18 @@ export default {
       if(this.userIndex === '') {
         alert("haven't found any user")
       } else {
+        this.loading = true
         let user = await fetch(`http://localhost:3001/api/username?username=${this.username}`, {
             method: "GET",
           }).then(res => res.json())
           .catch(error => {console.error('Error:', error)})
           .then(response => response);
 
-        console.log('user', user.data);
+        this.loading = false
+
+        this.activeTab('personTab')
+
+        //console.log('user', user.data);
         this.user = user.data
 
         this.organazeSkills()
@@ -144,10 +149,12 @@ export default {
       this.skills = {
         noExperience: noExperience, 
         novice: novice,
-        proeficient: proficient, 
+        proeficient: proficient,
         expert: expert,
         master: master
       }
+
+      this.loading = false
 
       // console.log('length novice', this.strengths.novice.length);
     },
@@ -156,6 +163,10 @@ export default {
       let data = {skill: skill.name}
       
       this.skillSelected = skill.name
+
+      this.activeTab('skillTab')
+
+      this.loading = true
 
       let result = await fetch(`http://localhost:3001/api/searchForSkill`, {
         method: "POST",
@@ -166,6 +177,7 @@ export default {
       }).then(res => res.json())
       .catch(error => {console.error('Error:', error)})
       .then(response => response);
+
 
       this.skillMatch = result.data
 
@@ -178,8 +190,10 @@ export default {
       .catch(error => {console.error('Error:', error)})
       .then(response => response);
 
+      this.loading = false
+
       this.connections = connections.data
-      console.log('this.connections', this.connections);
+      //console.log('this.connections', this.connections);
       
     },
     goToUser(username) {

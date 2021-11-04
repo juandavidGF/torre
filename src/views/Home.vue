@@ -9,6 +9,7 @@
           >
           <button class="button-search mt-14 -ml-16 px-1 text-yellow-400"  @click="searchFun" v-on:keyup.enter="searchFun">search</button>
         </div>
+        <div v-if="loading" class="text-4xl text-yellow-400 ml-3 sm:ml-6 sm:mt-15">Loading...</div>
         <div v-for="user in result.data" :key="user.subjectId"
         class="cardUser my-2 py-3 text-left flex flex row">
 
@@ -16,7 +17,6 @@
             <img  class="object-contain" :src="user.picture">
           </div>
 
-          <div v-if="loading" class=" text-4xl text-yellow-400 ml-3 sm:ml-6">Loading...</div>
           
           <div class="ml-3 sm:ml-6">
             <div class="text-yellow-400 cursor-pointer text-sm" @click="goToUser(user.username)">{{ user.name }}</div>
