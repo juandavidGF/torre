@@ -1,10 +1,15 @@
 <template>
   <div class="home">
-
     <label for="search">Search </label>
     <input v-model="search" type="text" id="search">
     <button @click="searchFun">search</button>
-    
+    <button @click="other()">other</button>
+
+    <div v-for="user in result.data" :key="user.subjectId">
+      <h1>{{ user.name }}</h1>
+    </div>
+
+
   </div>
 </template>
 
@@ -19,15 +24,13 @@ export default {
   },
   data() {
     return {
-      search: ''
+      search: '',
+      result: ''
     }
   },
   methods: {
     async searchFun() {
-      
-      let data = {
-        search: this.search
-      }
+      let data = {search: this.search}
 
       let result = await fetch(`http://localhost:3000/api/searchJob`, {
         method: "POST",
@@ -39,21 +42,14 @@ export default {
       .catch(error => {console.error('Error:', error)})
       .then(response => response);
 
+      this.result = result
+
       console.log(result);
-    }
-
-
-
-    
-
-
-
-
-
-
-
-
-    
+    },
+    other() {
+      console.log(this.result != '')
+      
+    },  
   }
 }
 </script>
