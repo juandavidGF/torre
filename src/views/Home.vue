@@ -4,7 +4,7 @@
       <div class="mx-3 sm:mx-5 md:mx-0">
         <div class="w-full flex flex-row mb-12">
           <input class="searchInput rounded-3xl flex-grow py-2 border mt-14 pl-6 border-white focus:border-yellow-400"
-          placeholder="name"
+          placeholder="name ex: juan david granados"
           v-model="search" type="text" id="search"
           >
           <button class="button-search mt-14 -ml-16 px-1 text-yellow-400"  @click="searchFun" v-on:keyup.enter="searchFun">search</button>
