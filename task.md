@@ -1,10 +1,8 @@
 # TODO
 * Add loading
 * enter to search
-* improve images widht in matched people for skills section
 
 # DOING
-* retrive a list of conections given a user
 
 # DONE
 * search a specific people for name search (curl)
@@ -18,6 +16,7 @@
 * show basic important information related with it section
 * search for skills
 * Add results to new user section
+* retrive a list of conections given a user
 
 
 # Interesting topics to develop
