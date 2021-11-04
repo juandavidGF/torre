@@ -4,6 +4,7 @@
 * improve images widht in matched people for skills section
 
 # DOING
+* retrive a list of conections given a user
 
 # DONE
 * search a specific people for name search (curl)
@@ -22,6 +23,7 @@
 # Interesting topics to develop
 * Mesure the capacity of the users not only based in experience
 * Aling the objetives of the person with the suggestions, for example the conections
+* update favicon
 
 
 + conections of a spcific user

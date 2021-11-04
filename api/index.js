@@ -24,10 +24,10 @@ app.get('/api/username', async (req, res) => {
   })
 })
 
-app.get('/api/conections', async (req, res) => {
+app.get('/api/connections', async (req, res) => {
   const { username } = req.query
 
-  let dat = await fetch(`https://torre.bio/api/bios/${username}`, {
+  let dat = await fetch(`https://torre.bio/api/people/${username}/connections`, {
     method: "GET"
   }).then(res => res.json())
   .catch(error => {console.error('Error:', error)})

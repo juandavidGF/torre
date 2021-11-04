@@ -56,16 +56,16 @@
     </div>
     <!-- grade of conection -->
     <div class="card-user mx-auto max-w-xs w-80 py-10">
-      <div>Grades of connection</div>
-      <div v-for="user in skillMatch" :key="user.subjectId"
+      <div>By Grades of connection</div>
+      <div v-for="user in connections" :key="user.person.subjectId"
       class="cardUser my-2 py-3 text-left flex flex row">
         <div class="hex min-w-16 w-1/6 ml-2 flex object-center sm:ml-3">
-          <img  class="object-contain" :src="user.picture">
+          <img  class="object-contain" :src="user.person.picture">
         </div>
         <div class="ml-3 sm:ml-6 w-5/6">
-          <div class="text-yellow-400 cursor-pointer text-sm" @click="goToUser(user.username)">{{ user.name }}</div>
-          <div class="text-xs sm:text-sm">{{user.professionalHeadline}}</div>
-          <div class="text-xs sm:text-xs mt-1">{{user.locationName}}</div>
+          <div class="text-yellow-400 cursor-pointer text-sm" @click="goToUser(user.username)">{{ user.person.name }}</div>
+          <div class="text-xs sm:text-sm">{{user.person.professionalHeadline}}</div>
+          <div class="text-xs sm:text-xs mt-1">{{user.person.locationName}}</div>
         </div>
       </div>
     </div>
@@ -81,7 +81,8 @@ export default {
       username: '',
       skills: {},
       skillMatch: {},
-      skillSelected: ''
+      skillSelected: '',
+      connections: {}
     }
   },
   async mounted() {
@@ -158,8 +159,7 @@ export default {
 
       this.skillMatch = result.data
 
-
-      let conections = await fetch(`http://localhost:3000/api/conection`, {
+      let connections = await fetch(`http://localhost:3000/api/connections?username=${this.username}`, {
         method: "GET",
         headers: {
           'Content-Type': 'application/json'
@@ -168,7 +168,8 @@ export default {
       .catch(error => {console.error('Error:', error)})
       .then(response => response);
 
-      this.skillMatch = result.data
+      this.connections = connections.data
+      console.log('this.connections', this.connections);
       
     },
     goToUser(username) {
