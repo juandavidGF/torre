@@ -24,10 +24,25 @@ app.get('/api/username', async (req, res) => {
   })
 })
 
+app.get('/api/conections', async (req, res) => {
+  const { username } = req.query
+
+  let dat = await fetch(`https://torre.bio/api/bios/${username}`, {
+    method: "GET"
+  }).then(res => res.json())
+  .catch(error => {console.error('Error:', error)})
+  .then(response => response);
+
+  res.status(200).send({
+    data: dat
+  })
+})
+
+
 app.post('/api/searchForSkill', async (req, res) => {
   const { skill } = req.body;
 
-  let dat = await fetch("https://search.torre.co/people/_search?currency=USD%24&periodicity=hourly&lang=es&size=10&aggregate=false", {
+  let dat = await fetch("https://search.torre.co/people/_search?currency=USD%24&periodicity=hourly&lang=es&size=20&aggregate=false", {
     method: "POST",
     headers: {
       'Content-Type': 'application/json'

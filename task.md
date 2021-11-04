@@ -1,8 +1,9 @@
 # TODO
 * Add loading
+* enter to search
+* improve images widht in matched people for skills section
 
 # DOING
-* search for skills
 
 # DONE
 * search a specific people for name search (curl)
@@ -14,6 +15,8 @@
 * next of pick someoune, list the skills of the user
 * Impove the UI 
 * show basic important information related with it section
+* search for skills
+* Add results to new user section
 
 
 # Interesting topics to develop
