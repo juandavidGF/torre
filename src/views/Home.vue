@@ -1,14 +1,28 @@
 <template>
-  <div class="home">
-    <label for="search">Search </label>
-    <input v-model="search" type="text" id="search">
-    <button class="bg-blue-400 mx-3 " @click="searchFun">search</button>
-    <button @click="other()">other</button>
+  <div id="home">
+    <div class="max-w-3xl mx-auto">
+      <div class="mx-3 sm:mx-5 md:mx-0">
+        <div class="w-full flex flex-row mb-12">
+          <input class="searchInput rounded-3xl flex-grow py-2 border mt-14 pl-6 border-white focus:border-yellow-400"
+          placeholder="name"
+          v-model="search" type="text" id="search"
+          >
+          <button class="button-search mt-14 -ml-16 px-1 text-yellow-400" @click="searchFun">search</button>
+        </div>
+        <div v-for="user in result.data" :key="user.subjectId"
+        class="cardUser my-2 py-3 text-left flex flex row">
 
-    <div v-for="user in result.data" :key="user.subjectId">
-      <h1 @click="goToUser(user.username)">{{ user.name }}</h1>      
-      <p class="bg-red-500">{{user.professionalHeadline}}</p>
-      <p>{{user.locationName}}</p>
+          <div class="hex w-16 ml-2 flex object-center sm:ml-3">
+            <img  class="object-contain" :src="user.picture">
+          </div>
+          
+          <div class="ml-3 sm:ml-6">
+            <div class="text-yellow-400 cursor-pointer text-sm" @click="goToUser(user.username)">{{ user.name }}</div>
+            <div class="text-xs sm:text-sm">{{user.professionalHeadline}}</div>
+            <div class="text-xs sm:text-xs mt-1">{{user.locationName}}</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -59,3 +73,17 @@ export default {
   }
 }
 </script>
+
+
+<style>
+
+.cardUser {
+  background-color: #27292d;
+}
+
+.searchInput {
+  background-color: #010102;
+  font-size: 16px;
+}
+
+</style>
