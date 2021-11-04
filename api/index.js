@@ -24,6 +24,24 @@ app.get('/api/username', async (req, res) => {
   })
 })
 
+app.post('/api/searchForSkill', async (req, res) => {
+  const { skill } = req.body;
+
+  let dat = await fetch("https://search.torre.co/people/_search?currency=USD%24&periodicity=hourly&lang=es&size=10&aggregate=false", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: `{\"skill/role\":{\"text\":\"${skill}\",\"proficiency\":\"proficient\"}}`,
+  }).then(res => res.json())
+  .catch(error => {console.error('Error:', error)})
+  .then(response => response);
+
+  res.status(200).send({
+    data: dat.results
+  })
+})
+
 app.post('/api/searchJob', async (req, res) => {
   const { search } = req.body;
 

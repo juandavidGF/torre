@@ -1,11 +1,8 @@
 # TODO
-* next of pick someoune, list the skills of the user
-* Impove the UI 
-* show basic important information related with it section
-* Add extra 'secret functionality' ...
+* Add loading
 
 # DOING
-* Create a route to skill list of especific user
+* search for skills
 
 # DONE
 * search a specific people for name search (curl)
@@ -13,6 +10,10 @@
 * consume basic data since frontend via serverless function
 * Search for a user name and show a list of results
 * Configurate tailwindcss
+* Create a route to skill list of especific user
+* next of pick someoune, list the skills of the user
+* Impove the UI 
+* show basic important information related with it section
 
 
 # Interesting topics to develop
